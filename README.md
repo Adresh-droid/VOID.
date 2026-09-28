@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Adresh-droid"><img src="https://img.shields.io/badge/Developer-Adresh-C528D5?style=for-the-badge&logo=github" alt="Developer"></a>
+  <a href="https://github.com/Adresh-droid/VOID."><img src="https://img.shields.io/badge/Developer-Adresh-C528D5?style=for-the-badge&logo=github" alt="Developer"></a>
   <a href="https://www.gnu.org/licenses/gpl-3.0.html"><img src="https://img.shields.io/badge/License-GPL--3.0-blue?style=for-the-badge" alt="License"></a>
-  <a href="https://github.com/Adresh-droid"><img src="https://img.shields.io/badge/Platform-Android_8.0+-success?style=for-the-badge&logo=android" alt="Android"></a>
+  <a href="https://github.com/Adresh-droid/VOID."><img src="https://img.shields.io/badge/Platform-Android_8.0+-success?style=for-the-badge&logo=android" alt="Android"></a>
 </p>
 
 ---
@@ -32,10 +32,10 @@
 
 You can download the latest pre-compiled APK directly from GitHub Releases or the official VOID website:
 
-- 📱 **[Latest Stable Release v0.1.9(BETA)](https://github.com/Adresh-droid/VOID/releases/tag/v0.1.9(BETA))**
+- 📱 **[Latest Stable Release v0.1.9(BETA)](https://github.com/Adresh-droid/VOID./releases/tag/v0.1.9(BETA))**
 - 🌐 **[VOID Official Website & Portfolio](https://void-music.pages.dev)**
 
-> **Obtainium Support:** VOID supports auto-updating via [Obtainium](https://github.com/ImranR98/Obtainium). Add `https://github.com/Adresh-droid` to Obtainium for background APK updates.
+> **Obtainium Support:** VOID supports auto-updating via [Obtainium](https://github.com/ImranR98/Obtainium). Add `https://github.com/Adresh-droid/VOID.` to Obtainium for background APK updates.
 
 ---
 
