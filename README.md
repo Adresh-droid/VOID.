@@ -32,7 +32,7 @@
 
 You can download the latest pre-compiled APK directly from GitHub Releases or the official VOID website:
 
-- 📱 **[Latest Stable APK (v0.1.9 ARM64)](https://github.com/Adresh-droid)**
+- 📱 **[Latest Stable Release v0.1.9(BETA)](https://github.com/Adresh-droid/VOID/releases/tag/v0.1.9(BETA))**
 - 🌐 **[VOID Official Website & Portfolio](https://void-music.pages.dev)**
 
 > **Obtainium Support:** VOID supports auto-updating via [Obtainium](https://github.com/ImranR98/Obtainium). Add `https://github.com/Adresh-droid` to Obtainium for background APK updates.
@@ -41,13 +41,14 @@ You can download the latest pre-compiled APK directly from GitHub Releases or th
 
 ## 📱 App Experience & Screenshots
 
-Place screenshots inside `website/screenshots/` to display them on the website gallery:
+Check out the real app interface screenshots:
 
-1. **Now Playing Screen**: Full 9:16 background video, live lyrics, and clean circular controls.
-2. **Home Feed**: Quick Picks, Speed Dial, and Recent Playlists.
-3. **Library**: Sorter chips bar with Liked Songs, Downloads, and History shortcut cards.
-4. **DSP Studio**: Parametric EQ, Reverb, and Compression.
-5. **Appearance Settings**: Theme cards, accent palette, and Video Quality selector (`1080p`, `720p`, `480p`, `360p`).
+1. **Synchronized Lyrics**: Live lyrics playback view over background video.
+2. **Video Canvas**: Full 9:16 background video rendering.
+3. **Library & Filters**: Custom sorter chips (`All`, `Playlists`, `Songs`, `Albums`, `Local`) and hero cards (`Liked Songs`, `Downloads`, `History`).
+4. **3D Album Motion**: Interactive 60 FPS gyroscopic tilt artwork.
+5. **DSP Studio**: Parametric EQ, Reverb, and Compression audio engine.
+6. **Explore & Search**: YouTube Music genres and moods discovery.
 
 ---
 
