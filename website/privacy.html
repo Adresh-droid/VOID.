@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — VOID Music Player</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        voidBg: '#050508',
+                        voidCard: '#0C0C12',
+                        voidBorder: '#1F1F2E',
+                        voidPurple: '#C528D5',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #050508; color: #F0F0F5; font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(12, 12, 18, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-6">
+    <div class="max-w-4xl mx-auto w-full space-y-8 py-10">
+        <a href="index.html#home" class="inline-flex items-center space-x-2 text-voidPurple hover:underline font-bold text-sm">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Back to VOID Music</span>
+        </a>
+
+        <div class="glass-panel p-8 sm:p-12 rounded-3xl space-y-6">
+            <h1 class="text-4xl font-black text-white">Privacy Policy for VOID Music Player</h1>
+            <p class="text-xs text-gray-400">Last Updated: September 29, 2026</p>
+
+            <div class="space-y-6 text-sm text-gray-300 leading-relaxed border-t border-voidBorder pt-6">
+                <div>
+                    <h2 class="text-lg font-bold text-white mb-2">1. Introduction</h2>
+                    <p>VOID Music Player is an open-source, non-profit Android music player designed with user privacy as a core principle.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-bold text-white mb-2">2. No Data Collection or Tracking</h2>
+                    <p>VOID does not collect, record, track, or sell any personal information, location data, or device identifiers. There are no third-party analytics SDKs or advertising networks included.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-bold text-white mb-2">3. Encrypted Music Streaming</h2>
+                    <p>All network requests travel directly from your Android device to YouTube Music / InnerTube servers over encrypted HTTPS without passing through any intermediate proxy servers owned by VOID.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-bold text-white mb-2">4. Local Device Storage</h2>
+                    <p>Downloaded audio, video caches, and lyrics are saved exclusively in your phone's app-private storage. Playlists and settings remain local on your device.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-bold text-white mb-2">5. Open Source & License</h2>
+                    <p>VOID is licensed under the <strong>GNU General Public License v3.0 (GPL-3.0)</strong>. The complete source code is publicly inspectable at <a href="https://github.com/Adresh-droid" target="_blank" class="text-voidPurple underline">github.com/Adresh-droid</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-xs text-gray-500 py-6">
+        © 2026 VOID Music Player. Developed by Adresh.
+    </footer>
+</body>
+</html>

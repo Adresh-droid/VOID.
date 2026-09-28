@@ -1,0 +1,55 @@
+# render.yaml
+# VOID Player — Render deployment configuration
+# https://render.com/docs/blueprint-spec
+#
+# After deploying to a new Render account, set all environment
+# variables in the Render dashboard → Environment tab.
+# No code changes are needed to point to new service URLs.
+
+services:
+  - type: web
+    name: void-player
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: >
+      npm install --omit=dev &&
+      node -e "
+        const fs=require('fs');
+        const ts=Date.now();
+        let sw=fs.readFileSync('public/sw.js','utf8');
+        sw=sw.replace('void-v__BUILD_TS__','void-v'+ts);
+        fs.writeFileSync('public/sw.js',sw);
+        console.log('SW stamped: void-v'+ts);
+      "
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    headers:
+      - path: /sw.js
+        name: Cache-Control
+        value: no-cache, no-store, must-revalidate
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      # ── Set these in the Render dashboard → Environment tab ─────────────
+      #
+      # External service URLs (update after migration):
+      #   VOID_HANDLER_URL      — void-playlist-service Render URL
+      #   VOID_SAAVN_URL        — JioSaavn API proxy Render URL + /api suffix
+      #   VOID_SOUNDCLOUD_URL   — void-soundcloud-service Render URL
+      #
+      # Google / YouTube:
+      #   VOID_YT_API_KEY       — YouTube Data API v3 key (optional)
+      #   GOOGLE_CLIENT_ID      — Google OAuth client ID
+      #   GOOGLE_CLIENT_SECRET  — Google OAuth client secret
+      #   GOOGLE_CALLBACK_URL   — https://your-app.onrender.com/api/auth/google/callback
+      #
+      # Security:
+      #   SESSION_SECRET        — random 32+ char string (web sessions)
+      #   JWT_SECRET            — random 32+ char string (Flutter/API tokens)
+      #
+      # CORS:
+      #   ALLOWED_ORIGINS       — comma-separated list of allowed origins

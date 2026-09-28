@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOID Music — Next-Gen Android Music Player & Developer Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        voidBg: '#050508',
+                        voidCard: '#0C0C12',
+                        voidCardHover: '#14141F',
+                        voidBorder: '#1F1F2E',
+                        voidPurple: '#C528D5',
+                        voidPurpleGlow: '#A939B9',
+                        voidCyan: '#32C6E8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #050508;
+            color: #F0F0F5;
+            font-family: 'Inter', sans-serif;
+        }
+        .purple-glow {
+            box-shadow: 0 0 40px -5px rgba(197, 40, 213, 0.35);
+        }
+        .purple-glow-hover:hover {
+            box-shadow: 0 0 50px 0px rgba(197, 40, 213, 0.5);
+        }
+        .glass-panel {
+            background: rgba(12, 12, 18, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .active-tab {
+            background: rgba(197, 40, 213, 0.15);
+            color: #C528D5;
+            border-color: #C528D5;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-voidPurple selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-voidBorder/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-voidPurple to-voidCyan p-[2px] shadow-lg shadow-voidPurple/30">
+                    <div class="w-full h-full bg-voidBg rounded-[10px] flex items-center justify-center">
+                        <span class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-voidPurple to-voidCyan">V</span>
+                    </div>
+                </div>
+                <span class="text-2xl font-black tracking-wider text-white">VOID <span class="text-xs px-2 py-0.5 rounded-full bg-voidPurple/20 text-voidPurple border border-voidPurple/30">v0.1.9</span></span>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center space-x-1">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-gray-300 hover:text-white hover:bg-white/5 active-tab">Home</button>
+                <button onclick="switchTab('downloads')" id="nav-downloads" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-gray-300 hover:text-white hover:bg-white/5">Downloads</button>
+                <button onclick="switchTab('experimental')" id="nav-experimental" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-gray-300 hover:text-white hover:bg-white/5">Experimental</button>
+                <button onclick="switchTab('changelog')" id="nav-changelog" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-gray-300 hover:text-white hover:bg-white/5">Changelog</button>
+                <button onclick="switchTab('bugs')" id="nav-bugs" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-gray-300 hover:text-white hover:bg-white/5">Bugs</button>
+                <button onclick="switchTab('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-gray-300 hover:text-white hover:bg-white/5">About & Dev</button>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <a href="https://github.com/EchoMusicApp/Echo-Music/releases" target="_blank" class="hidden sm:flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-voidPurple to-voidPurpleGlow text-white font-bold text-sm purple-glow purple-glow-hover transition transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-download">text</i>
+                    <span>Download APK</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+
+        <!-- 1. HOME TAB -->
+        <section id="tab-home" class="tab-content space-y-16">
+            <!-- Hero -->
+            <div class="text-center space-y-6 pt-10 pb-6 relative">
+                <div class="absolute inset-0 -z-10 flex items-center justify-center">
+                    <div class="w-96 h-96 bg-voidPurple/20 rounded-full blur-[120px] pointer-events-none"></div>
+                </div>
+
+                <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass-panel text-xs text-voidPurple font-semibold border border-voidPurple/30">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span>VOID Music Player v0.1.9 Released</span>
+                </div>
+
+                <h1 class="text-5xl sm:text-7xl font-black tracking-tight text-white max-w-4xl mx-auto leading-tight">
+                    Stream Music with <span class="text-transparent bg-clip-text bg-gradient-to-r from-voidPurple via-purple-400 to-voidCyan">Zero Compromises</span>
+                </h1>
+
+                <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto font-normal">
+                    A hyper-optimized, open-source Android music player featuring high-res background video canvas, 60 FPS 3D album tilt, real-time lyrics, and DSP audio processing.
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+                    <a href="downloads/Void-v0.1.9-arm64.apk" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-voidPurple to-voidPurpleGlow text-white font-black text-lg purple-glow purple-glow-hover transition transform hover:-translate-y-1 flex items-center space-x-3">
+                        <i class="fa-brands fa-android text-2xl"></i>
+                        <span>Download Latest APK (v0.1.9)</span>
+                    </a>
+                    <button onclick="switchTab('about')" class="px-8 py-4 rounded-2xl glass-panel text-white font-bold text-lg hover:bg-white/10 transition border border-voidBorder flex items-center space-x-2">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Developer & Portfolio</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Showcase Features -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10">
+                <div class="glass-panel p-8 rounded-3xl space-y-4 hover:border-voidPurple/50 transition">
+                    <div class="w-12 h-12 rounded-2xl bg-voidPurple/20 flex items-center justify-center text-voidPurple text-2xl">
+                        <i class="fa-solid fa-film"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Full 9:16 Video Canvas</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Enjoy YouTube official music videos natively rendered edge-to-edge as dynamic background canvases without letterboxing or cramping.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl space-y-4 hover:border-voidPurple/50 transition">
+                    <div class="w-12 h-12 rounded-2xl bg-voidCyan/20 flex items-center justify-center text-voidCyan text-2xl">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">60 FPS 3D Album Motion</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Interactive 3D gyroscopic tilt artwork that smoothly responds to your phone's movements in real-time.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl space-y-4 hover:border-voidPurple/50 transition">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-2xl">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">DSP Audio Engine</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Built-in parametric Equalizer, Schroeder algorithmic Reverb, and dynamic soft-knee Compression for audiophile sound tuning.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Screenshots Showcase Gallery -->
+            <div class="space-y-6 pt-10">
+                <div class="text-center space-y-2">
+                    <h2 class="text-3xl font-black text-white">App Experience & Interface</h2>
+                    <p class="text-gray-400 text-sm">Designed for sleek dark aesthetic and effortless fluid navigation.</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
+                    <!-- Screenshot 1: Player Lyrics -->
+                    <div class="glass-panel p-2 rounded-2xl border border-voidBorder/60 hover:border-voidPurple transition transform hover:-translate-y-1">
+                        <div class="aspect-[9/19] rounded-xl bg-voidCard overflow-hidden">
+                            <img src="screenshots/01-Player-Lyrics.jpg" class="w-full h-full object-cover rounded-xl" alt="Player Lyrics">
+                        </div>
+                        <p class="text-center text-xs font-bold text-gray-300 py-2">1. Synchronized Lyrics</p>
+                    </div>
+
+                    <!-- Screenshot 2: Video Player -->
+                    <div class="glass-panel p-2 rounded-2xl border border-voidBorder/60 hover:border-voidPurple transition transform hover:-translate-y-1">
+                        <div class="aspect-[9/19] rounded-xl bg-voidCard overflow-hidden">
+                            <img src="screenshots/02-Video-Player.jpg" class="w-full h-full object-cover rounded-xl" alt="Video Canvas">
+                        </div>
+                        <p class="text-center text-xs font-bold text-gray-300 py-2">2. Video Canvas</p>
+                    </div>
+
+                    <!-- Screenshot 3: Library -->
+                    <div class="glass-panel p-2 rounded-2xl border border-voidBorder/60 hover:border-voidPurple transition transform hover:-translate-y-1">
+                        <div class="aspect-[9/19] rounded-xl bg-voidCard overflow-hidden">
+                            <img src="screenshots/03-Library.jpg" class="w-full h-full object-cover rounded-xl" alt="Library">
+                        </div>
+                        <p class="text-center text-xs font-bold text-gray-300 py-2">3. Library Filters</p>
+                    </div>
+
+                    <!-- Screenshot 4: Now Playing -->
+                    <div class="glass-panel p-2 rounded-2xl border border-voidBorder/60 hover:border-voidPurple transition transform hover:-translate-y-1">
+                        <div class="aspect-[9/19] rounded-xl bg-voidCard overflow-hidden">
+                            <img src="screenshots/04-Now-Playing.jpg" class="w-full h-full object-cover rounded-xl" alt="Now Playing">
+                        </div>
+                        <p class="text-center text-xs font-bold text-gray-300 py-2">4. 3D Gyro Motion</p>
+                    </div>
+
+                    <!-- Screenshot 5: VOID Studio -->
+                    <div class="glass-panel p-2 rounded-2xl border border-voidBorder/60 hover:border-voidPurple transition transform hover:-translate-y-1">
+                        <div class="aspect-[9/19] rounded-xl bg-voidCard overflow-hidden">
+                            <img src="screenshots/05-VOID-Studio.jpg" class="w-full h-full object-cover rounded-xl" alt="VOID Studio">
+                        </div>
+                        <p class="text-center text-xs font-bold text-gray-300 py-2">5. DSP Equalizer</p>
+                    </div>
+
+                    <!-- Screenshot 6: Explore -->
+                    <div class="glass-panel p-2 rounded-2xl border border-voidBorder/60 hover:border-voidPurple transition transform hover:-translate-y-1">
+                        <div class="aspect-[9/19] rounded-xl bg-voidCard overflow-hidden">
+                            <img src="screenshots/06-Explore.jpg" class="w-full h-full object-cover rounded-xl" alt="Explore Search">
+                        </div>
+                        <p class="text-center text-xs font-bold text-gray-300 py-2">6. Explore & Search</p>
+                    </div>
+
+                    <!-- Screenshot 7: Home -->
+                    <div class="glass-panel p-2 rounded-2xl border border-voidBorder/60 hover:border-voidPurple transition transform hover:-translate-y-1">
+                        <div class="aspect-[9/19] rounded-xl bg-voidCard overflow-hidden">
+                            <img src="screenshots/07-Home.jpg" class="w-full h-full object-cover rounded-xl" alt="Home Feed">
+                        </div>
+                        <p class="text-center text-xs font-bold text-gray-300 py-2">7. Home Feed</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. DOWNLOADS TAB -->
+        <section id="tab-downloads" class="tab-content hidden space-y-10">
+            <div class="space-y-4">
+                <h2 class="text-4xl font-black text-white">📥 Download VOID APK</h2>
+                <p class="text-gray-400">All releases are built directly from open-source code and hosted on GitHub Releases.</p>
+            </div>
+
+            <!-- Latest Release Box -->
+            <div class="glass-panel p-8 rounded-3xl border-2 border-voidPurple/60 purple-glow space-y-6">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-voidPurple/30 text-voidPurple font-bold text-xs">LATEST STABLE</span>
+                        <h3 class="text-2xl font-black text-white mt-2">VOID v0.1.9 (ARM64 & ARMv7)</h3>
+                        <p class="text-sm text-gray-400 mt-1">Released September 2026 • Android 8.0+ (API 26+)</p>
+                    </div>
+                    <a href="downloads/Void-v0.1.9-arm64.apk" class="px-6 py-3 rounded-xl bg-voidPurple text-white font-bold hover:bg-voidPurpleGlow transition flex items-center space-x-2">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download v0.1.9 APK</span>
+                    </a>
+                </div>
+
+                <div class="border-t border-voidBorder pt-4 space-y-2 text-sm text-gray-300">
+                    <p class="font-bold text-white">Update Managers & Auto-Updater Compatibility:</p>
+                    <p class="text-gray-400">VOID supports update tracking tools like <a href="https://github.com/ImranR98/Obtainium" target="_blank" class="text-voidPurple underline">Obtainium</a>. Simply add the GitHub Repository URL to Obtainium for automatic background updates!</p>
+                </div>
+            </div>
+
+            <!-- Release History Table -->
+            <div class="glass-panel rounded-3xl p-6 space-y-4">
+                <h3 class="text-xl font-bold text-white">Release History</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="text-xs uppercase bg-white/5 text-gray-300">
+                            <tr>
+                                <th class="p-4">Version</th>
+                                <th class="p-4">Type</th>
+                                <th class="p-4">Date</th>
+                                <th class="p-4">Status</th>
+                                <th class="p-4 text-right">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-voidBorder">
+                            <tr class="hover:bg-white/5 transition">
+                                <td class="p-4 font-bold text-white">v0.1.9</td>
+                                <td class="p-4">Stable Release</td>
+                                <td class="p-4">Sep 2026</td>
+                                <td class="p-4 text-emerald-400 font-semibold">Active</td>
+                                <td class="p-4 text-right"><a href="#" class="text-voidPurple font-bold hover:underline">APK</a></td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition">
+                                <td class="p-4 font-bold text-white">v0.1.8</td>
+                                <td class="p-4">Stable Release</td>
+                                <td class="p-4">Sep 2026</td>
+                                <td class="p-4 text-gray-500">Archived</td>
+                                <td class="p-4 text-right"><a href="#" class="text-voidPurple font-bold hover:underline">APK</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. EXPERIMENTAL TAB -->
+        <section id="tab-experimental" class="tab-content hidden space-y-10">
+            <div class="space-y-4">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xs">
+                    <i class="fa-solid fa-flask"></i>
+                    <span>LABS & CHAOS BUILDS</span>
+                </div>
+                <h2 class="text-4xl font-black text-white">🧪 Experimental Builds & Early Access</h2>
+                <p class="text-gray-400">Bleeding-edge QA builds for friends, testers, and chaos testing before public release.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-panel p-6 rounded-3xl space-y-4 border border-amber-500/30">
+                    <h3 class="text-xl font-bold text-white">NIGHTLY / QA Builds</h3>
+                    <p class="text-sm text-gray-400">Includes experimental feature flags, raw debug logs, and unreleased UI concepts. Expect bugs and chaos!</p>
+                    <a href="#" class="inline-block px-5 py-2.5 rounded-xl bg-amber-500/20 text-amber-300 font-bold text-sm hover:bg-amber-500/30 transition">
+                        Download Nightly APK
+                    </a>
+                </div>
+
+                <div class="glass-panel p-6 rounded-3xl space-y-4">
+                    <h3 class="text-xl font-bold text-white">Join Early Access Testing</h3>
+                    <p class="text-sm text-gray-400">Want to test new features before anyone else? Join our Discord tester channel to provide direct feedback to the developer.</p>
+                    <a href="https://instagram.com/_mtb_adresh_" target="_blank" class="inline-block px-5 py-2.5 rounded-xl bg-voidPurple/20 text-voidPurple font-bold text-sm hover:bg-voidPurple/30 transition">
+                        DM Adresh on Insta
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CHANGELOG TAB -->
+        <section id="tab-changelog" class="tab-content hidden space-y-8">
+            <h2 class="text-4xl font-black text-white">📋 Version Changelog</h2>
+
+            <div class="space-y-6">
+                <!-- v0.1.9 -->
+                <div class="glass-panel p-6 rounded-3xl space-y-4 border-l-4 border-voidPurple">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-white">Version 0.1.9</h3>
+                        <span class="text-xs text-gray-500">September 28, 2026</span>
+                    </div>
+                    <ul class="list-disc list-inside text-sm text-gray-300 space-y-1.5">
+                        <li><strong class="text-white">Fixed Online & Recent Playlists:</strong> Resolved 404/VL prefix handling so online playlists load live tracks and song counts instantly.</li>
+                        <li><strong class="text-white">Fixed Audio Chopping & Stutter:</strong> Re-architected EQ, Reverb, and Compressor audio processors to eliminate on-thread allocations.</li>
+                        <li><strong class="text-white">No-Fail Video Quality Selector:</strong> Added 1080p, 720p, 480p, and 360p video quality options under Settings.</li>
+                        <li><strong class="text-white">Android 10/11 GPU Blur Protection:</strong> Safe fallback for pre-Android 12 devices to prevent GPU rendering lag.</li>
+                        <li><strong class="text-white">Queue Deduplication:</strong> Fixed issue where starting a track duplicated the song in the queue.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. BUGS TAB -->
+        <section id="tab-bugs" class="tab-content hidden space-y-8">
+            <h2 class="text-4xl font-black text-white">🐛 Bug Reports & Support</h2>
+
+            <div class="glass-panel p-8 rounded-3xl space-y-6">
+                <p class="text-gray-300 leading-relaxed">Found a glitch, playback bug, or crash? Help us fix it! You can submit bug reports directly or generate a Markdown audit report.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-2xl bg-white/5 space-y-3">
+                        <i class="fa-brands fa-discord text-3xl text-indigo-400"></i>
+                        <h3 class="text-lg font-bold text-white">Discord #bug-reports</h3>
+                        <p class="text-xs text-gray-400">Post screenshots, screen recordings, or logcat details in our Discord server.</p>
+                        <a href="https://instagram.com/_mtb_adresh_" target="_blank" class="inline-block text-sm text-indigo-400 font-bold hover:underline">Join Discord Channel →</a>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-white/5 space-y-3">
+                        <i class="fa-solid fa-file-code text-3xl text-voidPurple"></i>
+                        <h3 class="text-lg font-bold text-white">Submit .MD Audit Report</h3>
+                        <p class="text-xs text-gray-400">You can paste Markdown crash reports or logcat dumps directly to the developer.</p>
+                        <a href="mailto:i9830162750@gmail.com" class="inline-block text-sm text-voidPurple font-bold hover:underline">Email Audit to Adresh →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. ABOUT / PORTFOLIO TAB -->
+        <section id="tab-about" class="tab-content hidden space-y-10">
+            <div class="space-y-4">
+                <h2 class="text-4xl font-black text-white">👨‍💻 About Developer & Portfolio</h2>
+                <p class="text-gray-400">Meet the creator behind VOID Music Player.</p>
+            </div>
+
+            <!-- Profile Card -->
+            <div class="glass-panel p-8 rounded-3xl space-y-6 border border-voidPurple/40">
+                <div class="flex flex-wrap items-center gap-6">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-voidPurple to-voidCyan p-1">
+                        <div class="w-full h-full bg-voidBg rounded-full flex items-center justify-center text-4xl">
+                            👑
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-black text-white">Adresh</h3>
+                        <p class="text-voidPurple font-semibold text-sm">Lead Android Developer & Creator of VOID</p>
+                        <p class="text-gray-400 text-xs mt-1">Student & Mobile Software Engineer</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-4">
+                    <a href="https://instagram.com/_mtb_adresh_" target="_blank" class="p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition flex items-center space-x-3">
+                        <i class="fa-brands fa-instagram text-2xl text-pink-500"></i>
+                        <div>
+                            <p class="text-xs text-gray-400">Instagram</p>
+                            <p class="text-sm font-bold text-white">@_mtb_adresh_</p>
+                        </div>
+                    </a>
+
+                    <a href="mailto:i9830162750@gmail.com" class="p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition flex items-center space-x-3">
+                        <i class="fa-solid fa-envelope text-2xl text-voidPurple"></i>
+                        <div>
+                            <p class="text-xs text-gray-400">Email</p>
+                            <p class="text-sm font-bold text-white">i9830162750@...</p>
+                        </div>
+                    </a>
+
+                    <div class="p-4 rounded-2xl bg-white/5 flex items-center space-x-3">
+                        <i class="fa-solid fa-qrcode text-2xl text-emerald-400"></i>
+                        <div>
+                            <p class="text-xs text-gray-400">Support / UPI</p>
+                            <p class="text-sm font-bold text-white">i9830162750@oksbi</p>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com/Adresh-droid" target="_blank" class="p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition flex items-center space-x-3">
+                        <i class="fa-brands fa-github text-2xl text-gray-300"></i>
+                        <div>
+                            <p class="text-xs text-gray-400">GitHub</p>
+                            <p class="text-sm font-bold text-white">Adresh-droid</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-voidBorder/50 py-8 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+            <p>© 2026 VOID Music Player. Developed by Adresh. Licensed under GPL-3.0.</p>
+            <div class="flex space-x-6">
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" class="hover:text-white transition">GPL-3.0 License</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Router & Hash Switcher Script -->
+    <script>
+        function routeFromHash() {
+            let hash = window.location.hash.replace('#', '').toLowerCase() || 'home';
+            const validTabs = ['home', 'downloads', 'experimental', 'changelog', 'bugs', 'about'];
+            if (!validTabs.includes(hash)) hash = 'home';
+            showTabUI(hash);
+        }
+
+        function switchTab(tabId) {
+            window.location.hash = tabId;
+        }
+
+        function showTabUI(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active-tab'));
+
+            // Show target tab
+            const targetTab = document.getElementById('tab-' + tabId);
+            const targetBtn = document.getElementById('nav-' + tabId);
+
+            if (targetTab) targetTab.classList.remove('hidden');
+            if (targetBtn) targetBtn.classList.add('active-tab');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('hashchange', routeFromHash);
+        window.addEventListener('DOMContentLoaded', routeFromHash);
+    </script>
+</body>
+</html>
