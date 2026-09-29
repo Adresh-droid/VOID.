@@ -33,7 +33,7 @@ body{
 }
 a{color:inherit;}
 .wrap{max-width:1160px; margin:0 auto; padding:0 32px;}
-@media (max-width:640px){ .wrap{padding:0 20px;} }
+@media (max-width:640px){ .wrap{padding:0 24px;} }
 .mono{font-family:'JetBrains Mono',monospace;}
 
 body::before{
@@ -69,7 +69,7 @@ nav.wrap{ display:flex; align-items:center; justify-content:space-between; heigh
 @media (max-width:760px){ .navlinks{display:none;} }
 
 /* ---------- HERO ---------- */
-.hero{ position:relative; z-index:1; padding:88px 0 70px; }
+.hero{ position:relative; z-index:1; padding-top:120px; padding-bottom:90px; }
 .hero-eyebrow{
   display:inline-flex; align-items:center; gap:8px;
   color:var(--mag); font-size:0.82rem; font-family:'Space Grotesk',sans-serif;
@@ -82,7 +82,7 @@ h1.hero-title{
   margin:0 0 26px; letter-spacing:-0.01em; max-width:14ch;
 }
 .hero-sub{ max-width:52ch; color:var(--ink-dim); font-size:1.12rem; line-height:1.65; margin:0 0 36px; }
-.hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px;}
+.hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:72px;}
 .btn{
   display:inline-flex; align-items:center; gap:9px;
   padding:14px 24px; border-radius:3px;
@@ -97,24 +97,15 @@ h1.hero-title{
 .btn-ghost:hover{border-color:var(--ink-faint);}
 .hero-meta{
   display:flex; gap:32px; flex-wrap:wrap;
-  padding-top:28px; border-top:1px solid var(--line);
+  padding:32px 0 12px; border-top:1px solid var(--line);
   color:var(--ink-faint); font-size:0.85rem;
 }
 .hero-meta strong{color:var(--ink); font-family:'Space Grotesk',sans-serif; font-weight:600; display:block; font-size:1.3rem; margin-bottom:2px;}
 
 /* ---------- PHONE MARQUEE ---------- */
 .marquee-section{ position:relative; z-index:1; padding:0 0 90px; overflow:hidden; }
-.marquee-track{
-  display:flex;
-  width:max-content;
-  animation: scroll-x 42s linear infinite;
-}
-.marquee-half{ display:flex; gap:22px; padding-right:22px; flex:0 0 auto; }
-@media (prefers-reduced-motion: reduce){ .marquee-track{animation:none;} }
-@keyframes scroll-x{
-  from{ transform:translateX(0); }
-  to{ transform:translateX(-100%); }
-}
+.marquee-track{ display:flex; width:max-content; will-change:transform; }
+.marquee-half{ display:flex; gap:22px; flex:0 0 auto; }
 .phone{
   position:relative;
   width:196px; flex:0 0 auto;
@@ -455,5 +446,36 @@ footer{ position:relative; z-index:1; border-top:1px solid var(--line); padding:
   </div>
 </footer>
 
+<script>
+(function(){
+  const track = document.getElementById('marquee');
+  const row = track && track.querySelector('.marquee-half');
+  if (!track || !row) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const SPEED = 70;   // px per second
+  const GAP = 22;     // must match .marquee-half gap
+  let offset = 0, last = performance.now();
+
+  function tick(now){
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    offset += SPEED * dt;
+
+    let first = row.firstElementChild;
+    let w = first.getBoundingClientRect().width + GAP;
+    while (offset >= w) {
+      row.appendChild(first);
+      offset -= w;
+      first = row.firstElementChild;
+      w = first.getBoundingClientRect().width + GAP;
+    }
+
+    track.style.transform = 'translate3d(' + (-offset) + 'px,0,0)';
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
 </body>
 </html>
